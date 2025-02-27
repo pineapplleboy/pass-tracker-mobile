@@ -20,7 +20,7 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = Mulish,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 48.sp
+        fontSize = 36.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = Mulish,
@@ -34,9 +34,14 @@ val Typography = Typography(
     ),
     bodySmall = TextStyle(
         fontFamily = Mulish,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = Mulish,
         fontWeight = FontWeight.Light,
         fontSize = 14.sp
-    )
+    ),
 //    labelSmall = TextStyle(
 //        fontFamily = FontFamily.Default,
 //        fontWeight = FontWeight.Medium,
