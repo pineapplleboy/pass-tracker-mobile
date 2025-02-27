@@ -20,7 +20,7 @@ import com.example.passtracker.ui.component.TextTip
 import com.example.passtracker.ui.component.TitleField
 
 @Composable
-fun SignUpScreen(modifier: Modifier = Modifier){
+fun SignUpScreen(modifier: Modifier = Modifier, onClicked: () -> Unit = {}){
     Column(
         modifier
             .fillMaxSize()
@@ -74,7 +74,7 @@ fun SignUpScreen(modifier: Modifier = Modifier){
         .padding(bottom = 32.dp),verticalArrangement = Arrangement.Bottom){
         AppButton(text = stringResource(R.string.next), {})
         Spacer(modifier = Modifier.size(12.dp))
-        TextTip(text = stringResource(R.string.already_member), pointedText = stringResource(R.string.enter))
+        TextTip(text = stringResource(R.string.already_member), pointedText = stringResource(R.string.enter), onClicked)
     }
 }
 

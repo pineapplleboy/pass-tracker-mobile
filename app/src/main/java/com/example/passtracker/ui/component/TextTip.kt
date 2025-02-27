@@ -1,5 +1,6 @@
 package com.example.passtracker.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,7 +12,7 @@ import androidx.compose.ui.res.colorResource
 import com.example.passtracker.R
 
 @Composable
-fun TextTip(text: String, pointedText: String, modifier: Modifier = Modifier){
+fun TextTip(text: String, pointedText: String, onClicked: () -> Unit = {}, modifier: Modifier = Modifier){
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Text(
             text = text,
@@ -22,6 +23,7 @@ fun TextTip(text: String, pointedText: String, modifier: Modifier = Modifier){
             text = pointedText,
             style = MaterialTheme.typography.bodyLarge,
             color = colorResource(R.color.red),
+            modifier = Modifier.clickable(onClick = onClicked)
         )
     }
 }
