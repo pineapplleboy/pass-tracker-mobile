@@ -2,4 +2,20 @@
     <string name="app_name">Pass Tracker</string>
     <string name="login">Логин</string>
     <string name="enter_for_access">Войдите для доступа в аккаунт</string>
+
+    <string name="email">Почта</string>
+    <string name="password">Пароль</string>
+    <string name="lastname">Фамилия</string>
+    <string name="name">Имя</string>
+    <string name="surname">Отчество</string>
+    <string name="group">Группа</string>
+    <string name="confirm_password">Подтверждение пароля</string>
+
+    <string name="next">Далее</string>
+    <string name="not_register">"Ещё не зарегистрированы? "</string>
+    <string name="to_sign_up">Зарегистрироваться</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="sign_up_tip">Получите доступ, создав аккаунт</string>
+    <string name="enter">Войти</string>
+    <string name="already_member">"Уже зарегистрированы? "</string>
 </resources>

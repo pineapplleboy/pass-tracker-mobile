@@ -71,7 +71,7 @@ fun InputField(
         Image(
             painter = painterResource(iconId),
             contentDescription = null,
-            modifier = Modifier.size(24.dp).padding(end = 8.dp)
+            modifier = Modifier.size(36                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .dp).padding(end = 12.dp)
         )
     }
 }
