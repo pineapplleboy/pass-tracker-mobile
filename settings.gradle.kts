@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Pass Tracker"
 include(":app")
-include(":feature:registration")
+ 
