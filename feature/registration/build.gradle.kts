@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.passtracker"
+    namespace = "com.example.passtracker.registration"
     compileSdk = 34
 
     defaultConfig {
@@ -45,6 +45,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(project(":feature:registration"))
 }
