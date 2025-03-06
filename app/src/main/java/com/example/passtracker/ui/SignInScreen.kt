@@ -21,7 +21,7 @@ import com.example.passtracker.ui.component.TextTip
 import com.example.passtracker.ui.component.TitleField
 
 @Composable
-fun SignInScreen(modifier: Modifier = Modifier, onClicked: () -> Unit = {}){
+fun SignInScreen(modifier: Modifier = Modifier, onClicked: () -> Unit = {}, clickNext: () -> Unit = {}){
     Column (
         modifier.fillMaxSize().background(color = Color.White),
         verticalArrangement = Arrangement.Center
@@ -43,7 +43,7 @@ fun SignInScreen(modifier: Modifier = Modifier, onClicked: () -> Unit = {}){
 
     }
     Column (modifier.fillMaxSize().padding(bottom = 32.dp),verticalArrangement = Arrangement.Bottom){
-        AppButton(text = stringResource(R.string.next), {})
+        AppButton(text = stringResource(R.string.next), clickNext)
         Spacer(modifier = Modifier.size(12.dp))
         TextTip(text = stringResource(R.string.not_register), pointedText = stringResource(R.string.to_sign_up), onClicked = onClicked)
     }

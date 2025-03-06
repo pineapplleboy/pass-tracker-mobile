@@ -18,4 +18,7 @@
     <string name="sign_up_tip">Получите доступ, создав аккаунт</string>
     <string name="enter">Войти</string>
     <string name="already_member">"Уже зарегистрированы? "</string>
+    <string name="my_passes">Мои пропуски</string>
+    <string name="start_from">Начинается</string>
+    <string name="end_on">Заканчивается</string>
 </resources>

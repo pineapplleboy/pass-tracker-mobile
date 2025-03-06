@@ -13,7 +13,8 @@ val Mulish = FontFamily(
     Font(R.font.mulish_light),
     Font(R.font.mulish_extrabold),
     Font(R.font.mulish_bold),
-    Font(R.font.mulish_semibold)
+    Font(R.font.mulish_semibold),
+    Font(R.font.mulish_medium)
 )
 // Set of Material typography styles to start with
 val Typography = Typography(
@@ -36,6 +37,11 @@ val Typography = Typography(
         fontFamily = Mulish,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = Mulish,
+        fontWeight = FontWeight.Medium,
+        fontSize = 24.sp
     ),
     labelSmall = TextStyle(
         fontFamily = Mulish,
