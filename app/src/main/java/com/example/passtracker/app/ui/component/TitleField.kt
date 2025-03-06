@@ -1,4 +1,4 @@
-package com.example.passtracker.ui.component
+package com.example.passtracker.app.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

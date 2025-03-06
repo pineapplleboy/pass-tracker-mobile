@@ -1,4 +1,4 @@
-package com.example.passtracker.ui.screen
+package com.example.passtracker.app.ui.screen
 
 sealed class Screen (val route: String){
     object SignInScreen: Screen(route = "sign_in_screen")

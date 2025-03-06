@@ -1,4 +1,4 @@
-package com.example.passtracker.ui.component
+package com.example.passtracker.app.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,10 +31,10 @@ import com.example.passtracker.R
 fun InputField(
     hint: String,
     iconId: Int,
-    modifier: Modifier = Modifier
+    value: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit
 ) {
-    var value by remember { mutableStateOf("") }
-
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -46,7 +46,7 @@ fun InputField(
         TextField(
             value = value,
             onValueChange = {
-                value = it
+                onValueChange(it)
             },
             singleLine = true,
             colors = TextFieldDefaults.colors(
@@ -76,11 +76,11 @@ fun InputField(
     }
 }
 
-@Preview
-@Composable
-fun Preview() {
-    InputField(
-        hint = "Негры",
-        iconId = R.drawable.ic_launcher_background
-    )
-}
+//@Preview
+//@Composable
+//fun Preview() {
+//    InputField(
+//        hint = "Негры",
+//        iconId = R.drawable.ic_launcher_background
+//    )
+//}

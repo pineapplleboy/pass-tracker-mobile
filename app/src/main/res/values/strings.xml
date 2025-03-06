@@ -18,4 +18,7 @@
     <string name="sign_up_tip">Получите доступ, создав аккаунт</string>
     <string name="enter">Войти</string>
     <string name="already_member">"Уже зарегистрированы? "</string>
+    <string name="error_title">Произошла ошибка</string>
+    <string name="error_try_again">Повторить</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
 </resources>

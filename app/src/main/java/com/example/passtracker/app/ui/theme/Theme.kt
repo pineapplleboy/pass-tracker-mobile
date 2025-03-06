@@ -1,4 +1,4 @@
-package com.example.passtracker.ui.theme
+package com.example.passtracker.app.ui.theme
 
 import android.app.Activity
 import android.os.Build
