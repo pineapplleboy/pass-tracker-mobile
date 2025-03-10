@@ -1,8 +1,11 @@
 package com.example.passtracker.ui.component
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,12 +16,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.passtracker.R
 
 @Composable
-fun HeaderAppBar(header: String, modifier: Modifier = Modifier) {
+fun HeaderAppBar(header: String, modifier: Modifier = Modifier, onProfileClicked: () -> Unit = {}) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -28,7 +32,11 @@ fun HeaderAppBar(header: String, modifier: Modifier = Modifier) {
         )
         Icon(
             painter = painterResource(R.drawable.account_circle),
-            contentDescription = null
+            contentDescription = null,
+            modifier.clickable(onClick = {
+                Log.d("BottomSheet", "Icon clicked")
+                onProfileClicked()
+            })
         )
     }
 }

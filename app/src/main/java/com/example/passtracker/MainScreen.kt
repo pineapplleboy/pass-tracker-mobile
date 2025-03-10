@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.passtracker.ui.PassesScreen
+import com.example.passtracker.ui.ProfileScreen
 import com.example.passtracker.ui.screen.Screen
 import com.example.passtracker.ui.SignUpScreen
 import com.example.passtracker.ui.SignInScreen
@@ -38,7 +39,12 @@ fun MainScreen(
             },)
         }
         composable(Screen.PassesScreen.route) {
-            PassesScreen(modifier)
+            PassesScreen(modifier, onProfileClicked = {
+                navController.navigate(Screen.ProfileScreen.route)
+            })
+        }
+        composable(Screen.ProfileScreen.route) {
+            ProfileScreen(modifier = modifier)
         }
 
     }

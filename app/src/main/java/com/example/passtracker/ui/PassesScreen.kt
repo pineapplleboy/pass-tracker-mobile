@@ -5,6 +5,6 @@ import androidx.compose.ui.Modifier
 
 
 @Composable
-fun PassesScreen(modifier: Modifier = Modifier) {
-    PassesScreenContent(modifier)
+fun PassesScreen(modifier: Modifier = Modifier, onProfileClicked: () -> Unit) {
+    PassesScreenContent(modifier, onProfileClicked)
 }

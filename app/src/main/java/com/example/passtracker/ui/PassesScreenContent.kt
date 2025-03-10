@@ -24,23 +24,28 @@ import com.example.passtracker.ui.component.HeaderAppBar
 
 
 @Composable
-fun PassesScreenContent(modifier: Modifier = Modifier) {
+fun PassesScreenContent(modifier: Modifier = Modifier, onProfileClicked: () -> Unit = {}) {
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 32.dp, vertical = 24.dp)
-    ) {
-        HeaderAppBar(stringResource(R.string.my_passes))
-        Image(
-            painter = painterResource(R.drawable.students),
-            contentDescription = null
-        )
-        BottomSheet(
-            listOf("gfdg", "gfdg", "gfdg", "gfdg", "gfdg"),
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
 
+    ) {
+        Box(modifier = Modifier){
+            Image(
+                painter = painterResource(R.drawable.students),
+                contentDescription = null,
+                modifier = Modifier.padding(top = 32.dp)
+            )
+            Column {
+                HeaderAppBar(stringResource(R.string.my_passes), modifier, onProfileClicked)
+
+            }
+            BottomSheet(
+                listOf("gfdg", "gfdg", "gfdg", "gfdg", "gfdg"),
+                modifier = Modifier.padding(horizontal = 8.dp).padding(top = 16.dp)
+            )
+        }
     }
 }
 
