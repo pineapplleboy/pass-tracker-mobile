@@ -62,7 +62,7 @@ fun InputField(
                 Text(
                     text = hint,
                     color = colorResource(R.color.gray),
-                    fontSize = 14.sp
+
                 )
             },
             modifier = Modifier.weight(1f)

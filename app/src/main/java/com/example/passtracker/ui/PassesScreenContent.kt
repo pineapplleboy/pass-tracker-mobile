@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +33,7 @@ fun PassesScreenContent(modifier: Modifier = Modifier, onProfileClicked: () -> U
             .fillMaxSize()
 
     ) {
-        Box(modifier = Modifier){
+        Box(modifier = Modifier.fillMaxSize()){
             Image(
                 painter = painterResource(R.drawable.students),
                 contentDescription = null,
@@ -43,8 +45,17 @@ fun PassesScreenContent(modifier: Modifier = Modifier, onProfileClicked: () -> U
             }
             BottomSheet(
                 listOf("gfdg", "gfdg", "gfdg", "gfdg", "gfdg"),
-                modifier = Modifier.padding(horizontal = 8.dp).padding(top = 16.dp)
+                modifier = Modifier.padding(horizontal = 8.dp).padding(top = 8.dp)
             )
+            FloatingActionButton(
+                onClick = {},
+                modifier = Modifier.align(Alignment.BottomEnd).padding(24.dp),
+                containerColor = colorResource(R.color.red),
+                contentColor = colorResource(R.color.bottom_background)
+
+            ) {
+                Icon(Icons.Filled.Add, null, modifier = Modifier.size(32.dp))
+            }
         }
     }
 }

@@ -5,8 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier) {
-    ProfileScreenContent()
+fun ProfileScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit = {}) {
+    ProfileScreenContent(modifier, onBackClick = onBackClick)
 }
 
 @Preview

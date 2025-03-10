@@ -102,7 +102,7 @@ fun BottomSheet(passes: List<String>, modifier: Modifier = Modifier) {
         ) {
             Image(
                 painter = painterResource(R.drawable.rectangle_40),
-                contentDescription = "Drag handle",
+                contentDescription = null,
                 modifier = Modifier.align(Alignment.Center)
             )
         }

@@ -44,7 +44,9 @@ fun MainScreen(
             })
         }
         composable(Screen.ProfileScreen.route) {
-            ProfileScreen(modifier = modifier)
+            ProfileScreen(modifier = modifier, onBackClick = {
+                navController.popBackStack()
+            })
         }
 
     }
