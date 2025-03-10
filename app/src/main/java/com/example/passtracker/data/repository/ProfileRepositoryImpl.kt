@@ -1,12 +1,14 @@
-package com.example.passtracker.domain.repository
+package com.example.passtracker.data.repository
 
 import com.example.passtracker.data.converter.toDTO
-import com.example.passtracker.data.repository.ProfileRepository
+import com.example.passtracker.data.converter.toDomainModel
 import com.example.passtracker.data.network.PassTrackerAPI
 import com.example.passtracker.data.network.SessionManager
 import com.example.passtracker.domain.model.AuthResult
+import com.example.passtracker.domain.model.Profile
 import com.example.passtracker.domain.model.UserLogin
 import com.example.passtracker.domain.model.UserRegister
+import com.example.passtracker.domain.repository.ProfileRepository
 
 class ProfileRepositoryImpl(
     private val api: PassTrackerAPI,
@@ -55,6 +57,22 @@ class ProfileRepositoryImpl(
             }
         } catch (e: Exception) {
             AuthResult.Error(e.localizedMessage ?: "Unknown error")
+        }
+    }
+
+    override suspend fun getProfile(): Result<Profile> {
+        return try {
+            val response = api.getProfile()
+            if(response.isSuccessful) {
+                response.body()?.let {
+                    Result.success(it.toDomainModel())
+                } ?: Result.failure(Throwable(message = "Empty response"))
+            }
+            else {
+                Result.failure(Throwable(message = response.message()))
+            }
+        } catch(e: Exception) {
+            Result.failure(Throwable(message = e.localizedMessage ?: "Unknown error"))
         }
     }
 }

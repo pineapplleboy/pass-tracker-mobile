@@ -1,10 +1,12 @@
 package com.example.passtracker.data.network
 
+import com.example.passtracker.data.model.ProfileDTO
 import com.example.passtracker.data.model.TokenDTO
 import com.example.passtracker.data.model.UserLoginDTO
 import com.example.passtracker.data.model.UserRegisterDTO
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface PassTrackerAPI {
@@ -17,4 +19,7 @@ interface PassTrackerAPI {
 
     @POST("user/logout")
     suspend fun logout(): Response<Unit>
+
+    @GET("user/profile")
+    suspend fun getProfile(): Response<ProfileDTO>
 }

@@ -1,6 +1,6 @@
 package com.example.passtracker.domain.usecase
 
-import com.example.passtracker.data.repository.ProfileRepository
+import com.example.passtracker.domain.repository.ProfileRepository
 import com.example.passtracker.domain.model.AuthResult
 import com.example.passtracker.domain.model.UserRegister
 

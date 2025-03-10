@@ -4,8 +4,8 @@ import com.example.passtracker.data.constants.DataConstants
 import com.example.passtracker.data.network.PassTrackerAPI
 import com.example.passtracker.data.network.SessionManager
 import com.example.passtracker.data.network.UnsafeOkHttpClient
-import com.example.passtracker.data.repository.ProfileRepository
-import com.example.passtracker.domain.repository.ProfileRepositoryImpl
+import com.example.passtracker.domain.repository.ProfileRepository
+import com.example.passtracker.data.repository.ProfileRepositoryImpl
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
