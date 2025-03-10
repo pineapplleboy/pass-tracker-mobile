@@ -8,7 +8,7 @@ class RegisterUseCase(
     private val repository: ProfileRepository
 ) {
     suspend operator fun invoke(user: UserRegister): AuthResult {
-//        return repository.register(user)
-        return AuthResult.Success
+        return repository.register(user)
+//        return AuthResult.Success
     }
 }
