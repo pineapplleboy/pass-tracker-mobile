@@ -7,24 +7,22 @@ import javax.net.ssl.*
 
 object UnsafeOkHttpClient {
     fun getUnsafeOkHttpClient(): OkHttpClient {
-        return try {
-            val trustAllCertificates = arrayOf<TrustManager>(
-                object : X509TrustManager {
-                    override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
-                    override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
-                    override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-                }
-            )
+        try {
+            val trustAllCerts: Array<TrustManager> = arrayOf(object : X509TrustManager {
+                override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+                override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+            })
 
-            val sslContext = SSLContext.getInstance("TLS")
-            sslContext.init(null, trustAllCertificates, SecureRandom())
+            val sslContext: SSLContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, SecureRandom())
 
-            val sslSocketFactory = sslContext.socketFactory
+            val sslSocketFactory: SSLSocketFactory = sslContext.socketFactory
 
-            OkHttpClient.Builder()
-                .sslSocketFactory(sslSocketFactory, trustAllCertificates[0] as X509TrustManager)
-                .hostnameVerifier { _, _ -> true }
-                .build()
+            val builder = OkHttpClient.Builder()
+            builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+            builder.hostnameVerifier { _, _ -> true }
+            return builder.build()
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
