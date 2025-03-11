@@ -10,9 +10,8 @@ import com.example.passtracker.app.presentation.viewmodel.RegisterViewModel
 import org.koin.androidx.compose.koinViewModel
 import com.example.passtracker.ui.PassesScreen
 import com.example.passtracker.ui.ProfileScreen
-import com.example.passtracker.ui.screen.Screen
-import com.example.passtracker.ui.SignUpScreen
-import com.example.passtracker.ui.SignInScreen
+import com.example.passtracker.app.ui.screen.Screen
+import com.example.passtracker.app.ui.screen.SignUpScreen
 
 @Composable
 fun MainScreen(

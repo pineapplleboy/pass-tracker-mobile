@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,10 +34,15 @@ import com.example.passtracker.domain.model.UserLogin
 fun SignInScreen(
     viewModel: LoginViewModel,
     modifier: Modifier = Modifier,
-    onClicked: () -> Unit
+    onClicked: () -> Unit,
+    clickNext: () -> Unit
 ) {
     val loginState by viewModel.state.collectAsState()
-
+    LaunchedEffect(loginState) {
+        if (loginState is LoginState.Success) {
+            clickNext()
+        }
+    }
     when (val state = loginState) {
         is LoginState.Initial -> SignInScreenContent(
             modifier = modifier,
@@ -45,13 +51,16 @@ fun SignInScreen(
             },
             onLogin = {
                 viewModel.login(it)
-            }
+            },
+
         )
 
         is LoginState.Loading -> LoadingComponent()
 
         is LoginState.Failure -> ErrorComponent(state.message) {
         }
+        is LoginState.Success -> Unit
+
     }
 }
 
@@ -59,7 +68,7 @@ fun SignInScreen(
 fun SignInScreenContent(
     modifier: Modifier = Modifier,
     onClicked: () -> Unit = {},
-    onLogin: (user: UserLogin) -> Unit = {}
+    onLogin: (user: UserLogin) -> Unit = {},
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
