@@ -8,6 +8,11 @@ import androidx.navigation.compose.composable
 import com.example.passtracker.app.presentation.viewmodel.LoginViewModel
 import com.example.passtracker.app.presentation.viewmodel.RegisterViewModel
 import org.koin.androidx.compose.koinViewModel
+import com.example.passtracker.ui.PassesScreen
+import com.example.passtracker.ui.ProfileScreen
+import com.example.passtracker.ui.screen.Screen
+import com.example.passtracker.ui.SignUpScreen
+import com.example.passtracker.ui.SignInScreen
 
 @Composable
 fun MainScreen(
@@ -28,7 +33,9 @@ fun MainScreen(
                         inclusive = true
                     }
                 }
-            },)
+            }, clickNext = {
+                navController.navigate(Screen.PassesScreen.route)
+            })
         }
 
         composable(Screen.SignUpScreen.route) {
@@ -45,6 +52,16 @@ fun MainScreen(
                     }
                 }
             },)
+        }
+        composable(Screen.PassesScreen.route) {
+            PassesScreen(modifier, onProfileClicked = {
+                navController.navigate(Screen.ProfileScreen.route)
+            })
+        }
+        composable(Screen.ProfileScreen.route) {
+            ProfileScreen(modifier = modifier, onBackClick = {
+                navController.popBackStack()
+            })
         }
 
     }

@@ -21,4 +21,8 @@
     <string name="error_title">Произошла ошибка</string>
     <string name="error_try_again">Повторить</string>
     <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="my_passes">Мои пропуски</string>
+    <string name="start_from">Начинается</string>
+    <string name="end_on">Заканчивается</string>
+    <string name="name_text">%1$s %2$s %3$s</string>
 </resources>
