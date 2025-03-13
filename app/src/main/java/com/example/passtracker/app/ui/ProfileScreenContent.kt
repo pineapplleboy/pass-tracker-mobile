@@ -1,6 +1,5 @@
-package com.example.passtracker.ui
+package com.example.passtracker.app.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,16 +14,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.passtracker.R
-import com.example.passtracker.ui.component.ProfileAvatarText
-import com.example.passtracker.ui.component.ProfileBody
+import com.example.passtracker.domain.model.Profile
+import com.example.passtracker.app.ui.component.ProfileAvatarText
+import com.example.passtracker.app.ui.component.ProfileBody
 import com.example.passtracker.ui.component.ProfileTopBar
 
 @Composable
-fun ProfileScreenContent(modifier: Modifier = Modifier, onBackClick: () -> Unit = {}) {
+fun ProfileScreenContent(
+    profile: Profile,
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit = {}
+) {
     var editMode by remember { mutableStateOf(false) }
     Column(
         modifier
@@ -42,25 +44,25 @@ fun ProfileScreenContent(modifier: Modifier = Modifier, onBackClick: () -> Unit 
                 )
         ) {
             ProfileAvatarText(
-                name = "Марат",
-                lastname = "Бачаев",
+                name = profile.name,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .offset(y = (-60).dp),
-                surname = "Витальевич",
                 editModeClick = { editMode = true }
             )
             ProfileBody(
                 modifier = Modifier.padding(horizontal = 24.dp),
-                editMode,
-                onClick = { editMode = false })
+                editMode = editMode,
+                onClick = { editMode = false },
+                profile = profile
+            )
 
         }
     }
 }
 
-@Preview
-@Composable
-fun ProfileScreenContentPreview() {
-    ProfileScreenContent()
-}
+//@Preview
+//@Composable
+//fun ProfileScreenContentPreview() {
+//    ProfileScreenContent()
+//}

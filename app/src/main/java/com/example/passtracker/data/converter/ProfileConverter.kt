@@ -5,9 +5,7 @@ import com.example.passtracker.domain.model.Profile
 
 fun ProfileDTO.toDomainModel(): Profile {
     return Profile(
-        firstName = this.firstName,
-        secondName = this.secondName,
-        middleName = this.middleName,
+        name = this.name,
         email = this.email,
         group = this.group
     )

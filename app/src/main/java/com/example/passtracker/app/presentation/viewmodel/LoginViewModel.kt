@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.passtracker.app.presentation.state.LoginState
 import com.example.passtracker.domain.model.AuthResult
 import com.example.passtracker.domain.model.UserLogin
+import com.example.passtracker.domain.usecase.CheckAuthorizationUseCase
 import com.example.passtracker.domain.usecase.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,11 +13,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    checkAuthorizationUseCase: CheckAuthorizationUseCase
 ): ViewModel() {
 
     private val _state = MutableStateFlow<LoginState>(LoginState.Initial)
     val state: StateFlow<LoginState> = _state.asStateFlow()
+
+    init {
+        if(checkAuthorizationUseCase()) {
+            _state.value = LoginState.Success
+        }
+    }
 
     fun login(user: UserLogin) {
 
