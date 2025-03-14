@@ -26,14 +26,14 @@ fun MainScreen(
                 modifier = modifier,
                 viewModel = viewModel,
                 onClicked = {
-                navController.navigate(Screen.SignUpScreen.route) {
-                    popUpTo(Screen.SignUpScreen.route) {
-                        inclusive = true
+                    navController.navigate(Screen.SignUpScreen.route) {
+                        popUpTo(Screen.SignUpScreen.route) {
+                            inclusive = true
+                        }
                     }
-                }
-            }, clickNext = {
-                navController.navigate(Screen.PassesScreen.route)
-            })
+                }, clickNext = {
+                    navController.navigate(Screen.PassesScreen.route)
+                })
         }
 
         composable(Screen.SignUpScreen.route) {
@@ -44,12 +44,19 @@ fun MainScreen(
                 modifier = modifier,
                 viewModel = viewModel,
                 onClicked = {
-                navController.navigate(Screen.SignInScreen.route) {
-                    popUpTo(Screen.SignInScreen.route) {
-                        inclusive = true
+                    navController.navigate(Screen.SignInScreen.route) {
+                        popUpTo(Screen.SignInScreen.route) {
+                            inclusive = true
+                        }
                     }
-                }
-            },)
+                },
+                clickNext = {
+                    navController.navigate(Screen.ProfileScreen.route) {
+                        popUpTo(Screen.ProfileScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                })
         }
         composable(Screen.PassesScreen.route) {
             PassesScreen(modifier, onProfileClicked = {

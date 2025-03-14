@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,10 +36,15 @@ import com.example.passtracker.domain.model.UserRegister
 fun SignUpScreen(
     viewModel: RegisterViewModel,
     modifier: Modifier = Modifier,
-    onClicked: () -> Unit
+    onClicked: () -> Unit,
+    clickNext: () -> Unit
 ) {
     val registerState by viewModel.state.collectAsState()
-
+    LaunchedEffect(registerState) {
+        if (registerState is RegisterState.Success){
+            clickNext()
+        }
+    }
     when (val state = registerState) {
         is RegisterState.Initial -> SignUpScreenContent(
             modifier = modifier,
@@ -54,6 +60,7 @@ fun SignUpScreen(
 
         is RegisterState.Failure -> ErrorComponent(state.message) {
         }
+        is RegisterState.Success -> Unit
     }
 }
 
