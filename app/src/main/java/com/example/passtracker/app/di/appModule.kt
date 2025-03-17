@@ -1,6 +1,9 @@
 package com.example.passtracker.app.di
 
+import com.example.passtracker.app.presentation.viewmodel.CreateRequestViewModel
+import com.example.passtracker.app.presentation.viewmodel.EditRequestViewModel
 import com.example.passtracker.app.presentation.viewmodel.LoginViewModel
+import com.example.passtracker.app.presentation.viewmodel.PassesViewModel
 import com.example.passtracker.app.presentation.viewmodel.ProfileViewModel
 import com.example.passtracker.app.presentation.viewmodel.RegisterViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -17,5 +20,22 @@ val appModule = module {
 
     viewModel<ProfileViewModel> {
         ProfileViewModel(get())
+    }
+
+    viewModel<PassesViewModel> {
+        PassesViewModel(get())
+    }
+
+    viewModel<CreateRequestViewModel> {
+        CreateRequestViewModel(get())
+    }
+
+    viewModel<EditRequestViewModel> { (id: String) ->
+        EditRequestViewModel(
+            id,
+            get(),
+            get(),
+            get()
+        )
     }
 }

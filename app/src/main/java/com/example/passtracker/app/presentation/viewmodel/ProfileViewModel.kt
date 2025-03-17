@@ -3,6 +3,7 @@ package com.example.passtracker.app.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.passtracker.app.presentation.state.ProfileState
+import com.example.passtracker.domain.usecase.GetAllUserRequestUseCase
 import com.example.passtracker.domain.usecase.GetProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

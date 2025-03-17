@@ -7,7 +7,9 @@ import com.example.passtracker.data.network.SessionManager
 import com.example.passtracker.data.network.TokenInterceptor
 import com.example.passtracker.data.network.UnsafeOkHttpClient
 import com.example.passtracker.data.repository.ProfileRepositoryImpl
+import com.example.passtracker.data.repository.RequestRepositoryImpl
 import com.example.passtracker.domain.repository.ProfileRepository
+import com.example.passtracker.domain.repository.RequestRepository
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -38,4 +40,6 @@ val dataModule = module {
     }
 
     single<ProfileRepository> { ProfileRepositoryImpl(get(), get()) }
+
+    single<RequestRepository> { RequestRepositoryImpl(get()) }
 }
