@@ -1,15 +1,13 @@
-package com.example.passtracker.ui
+package com.example.passtracker.app.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -18,15 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.passtracker.R
-import com.example.passtracker.ui.component.BottomSheet
+import com.example.passtracker.domain.model.RequestShort
+import com.example.passtracker.app.ui.component.BottomSheet
 import com.example.passtracker.ui.component.HeaderAppBar
 
 
 @Composable
-fun PassesScreenContent(modifier: Modifier = Modifier, onProfileClicked: () -> Unit = {}) {
+fun PassesScreenContent(
+    requests: List<RequestShort>,
+    modifier: Modifier = Modifier,
+    onProfileClicked: () -> Unit = {}
+) {
 
     Column(
         modifier = modifier
@@ -44,7 +46,7 @@ fun PassesScreenContent(modifier: Modifier = Modifier, onProfileClicked: () -> U
 
             }
             BottomSheet(
-                listOf("gfdg", "gfdg", "gfdg", "gfdg", "gfdg"),
+                requests,
                 modifier = Modifier.padding(horizontal = 8.dp).padding(top = 8.dp)
             )
             FloatingActionButton(
@@ -59,9 +61,9 @@ fun PassesScreenContent(modifier: Modifier = Modifier, onProfileClicked: () -> U
         }
     }
 }
-
-@Preview
-@Composable
-fun PassesScreenContentPreview() {
-    PassesScreenContent()
-}
+//
+//@Preview
+//@Composable
+//fun PassesScreenContentPreview() {
+//    PassesScreenContent()
+//}

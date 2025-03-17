@@ -56,7 +56,7 @@ class EditRequestViewModel(
         }
     }
 
-    private fun getRequest() {
+    fun getRequest() {
         _state.value = EditRequestState.Loading
 
         viewModelScope.launch {

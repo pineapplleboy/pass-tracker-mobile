@@ -6,11 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.passtracker.app.presentation.viewmodel.LoginViewModel
+import com.example.passtracker.app.presentation.viewmodel.PassesViewModel
 import com.example.passtracker.app.presentation.viewmodel.ProfileViewModel
 import com.example.passtracker.app.presentation.viewmodel.RegisterViewModel
 import org.koin.androidx.compose.koinViewModel
-import com.example.passtracker.ui.PassesScreen
-import com.example.passtracker.app.ui.ProfileScreen
 
 @Composable
 fun MainScreen(
@@ -59,7 +58,10 @@ fun MainScreen(
                 })
         }
         composable(Screen.PassesScreen.route) {
-            PassesScreen(modifier, onProfileClicked = {
+
+            val viewModel = koinViewModel<PassesViewModel>()
+
+            PassesScreen(viewModel, modifier, onProfileClicked = {
                 navController.navigate(Screen.ProfileScreen.route)
             })
         }

@@ -32,4 +32,8 @@ class CreateRequestViewModel(
             )
         }
     }
+
+    fun setInitialState() {
+        _state.value = CreateRequestState.Initial
+    }
 }

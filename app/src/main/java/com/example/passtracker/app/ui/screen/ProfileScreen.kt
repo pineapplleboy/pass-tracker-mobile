@@ -1,10 +1,9 @@
-package com.example.passtracker.app.ui
+package com.example.passtracker.app.ui.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.passtracker.app.presentation.state.ProfileState
 import com.example.passtracker.app.presentation.viewmodel.ProfileViewModel
 import com.example.passtracker.app.ui.component.ErrorComponent
