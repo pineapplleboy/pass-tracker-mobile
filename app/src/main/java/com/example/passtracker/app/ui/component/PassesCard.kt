@@ -2,6 +2,7 @@ package com.example.passtracker.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,13 +24,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.passtracker.R
+import com.example.passtracker.domain.model.RequestShort
 
 @Composable
-fun PassesCard(modifier: Modifier = Modifier) {
+fun PassesCard(modifier: Modifier = Modifier, pass: RequestShort,
+               onItemSelected: (String) -> Unit) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(color = Color.White, shape = RoundedCornerShape(32.dp))
+            .clickable { onItemSelected(pass.id.toString()) }
     ) {
         Row(
             modifier = Modifier
@@ -54,14 +58,14 @@ fun PassesCard(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-                DataTextField()
-                DataTextField(startDate = false)
+                DataTextField(date = pass.startDate)
+                DataTextField(startDate = false, date = pass.finishDate)
         }
     }
 }
 
-@Preview
-@Composable
-fun PassesCardPreview() {
-    PassesCard()
-}
+//@Preview
+//@Composable
+//fun PassesCardPreview() {
+//    PassesCard()
+//}

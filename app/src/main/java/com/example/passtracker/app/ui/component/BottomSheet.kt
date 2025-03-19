@@ -43,7 +43,8 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
-fun BottomSheet(passes: List<RequestShort>, modifier: Modifier = Modifier) {
+fun BottomSheet(passes: List<RequestShort>, modifier: Modifier = Modifier,
+                onItemSelected: (String) -> Unit) {
     val offsetY = remember { Animatable(0f) }
     val screenHeightPx = LocalDensity.current.run { LocalConfiguration.current.screenHeightDp.dp.toPx() }
     val maxOffset = screenHeightPx * 0.5f
@@ -115,7 +116,7 @@ fun BottomSheet(passes: List<RequestShort>, modifier: Modifier = Modifier) {
             }
         ) {
             items(passes) {
-                PassesCard(modifier = Modifier.padding(horizontal = 16.dp))
+                PassesCard(modifier = Modifier.padding(horizontal = 16.dp), it, onItemSelected = onItemSelected)
                 Spacer(modifier = Modifier.size(16.dp))
             }
         }

@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class EditRequestViewModel(
-    private val id: String,
     private val changeRequestUseCase: ChangeRequestUseCase,
     private val getRequestUseCase: GetRequestInfoUseCase,
     private val deleteRequestUseCase: DeleteRequestUseCase
@@ -22,17 +21,14 @@ class EditRequestViewModel(
     private val _state = MutableStateFlow<EditRequestState>(EditRequestState.Initial)
     val state: StateFlow<EditRequestState> = _state.asStateFlow()
 
-    init {
-        getRequest()
-    }
 
-    fun changeRequest(request: RequestChange) {
+    fun changeRequest(request: RequestChange, id: String) {
         _state.value = EditRequestState.Loading
         viewModelScope.launch {
             val result = changeRequestUseCase(id, request)
             result.fold(
                 onSuccess = {
-                    getRequest()
+                    getRequest(id)
                 },
                 onFailure = {
                     _state.value = EditRequestState.Failure(it.message)
@@ -41,7 +37,7 @@ class EditRequestViewModel(
         }
     }
 
-    fun deleteRequest() {
+    fun deleteRequest(id: String) {
         _state.value = EditRequestState.Loading
         viewModelScope.launch {
             val result = deleteRequestUseCase(id)
@@ -56,7 +52,7 @@ class EditRequestViewModel(
         }
     }
 
-    fun getRequest() {
+    fun getRequest(id: String) {
         _state.value = EditRequestState.Loading
 
         viewModelScope.launch {

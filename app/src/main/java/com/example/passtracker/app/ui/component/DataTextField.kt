@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.passtracker.R
 
 @Composable
-fun DataTextField(modifier: Modifier = Modifier, startDate: Boolean = true) {
+fun DataTextField(modifier: Modifier = Modifier, startDate: Boolean = true, date: String = "12.06.05") {
     Column(modifier = modifier) {
         Text(
             text = if (startDate) stringResource(R.string.start_from) else stringResource(R.string.end_on),
@@ -19,7 +19,7 @@ fun DataTextField(modifier: Modifier = Modifier, startDate: Boolean = true) {
             color = colorResource(R.color.gray),
         )
         Text(
-            text = "Jan 01, 8.35 PM",
+            text = date,
             style = MaterialTheme.typography.labelSmall
         )
     }

@@ -27,7 +27,8 @@ import com.example.passtracker.ui.component.HeaderAppBar
 fun PassesScreenContent(
     requests: List<RequestShort>,
     modifier: Modifier = Modifier,
-    onProfileClicked: () -> Unit = {}
+    onProfileClicked: () -> Unit = {},
+    onItemSelected: (String) -> Unit
 ) {
 
     Column(
@@ -47,7 +48,8 @@ fun PassesScreenContent(
             }
             BottomSheet(
                 requests,
-                modifier = Modifier.padding(horizontal = 8.dp).padding(top = 8.dp)
+                modifier = Modifier.padding(horizontal = 8.dp).padding(top = 8.dp),
+                onItemSelected = onItemSelected
             )
             FloatingActionButton(
                 onClick = {},

@@ -14,7 +14,8 @@ import com.example.passtracker.app.ui.component.LoadingComponent
 fun PassesScreen(
     viewModel: PassesViewModel,
     modifier: Modifier = Modifier,
-    onProfileClicked: () -> Unit
+    onProfileClicked: () -> Unit,
+    onItemSelected: (String) -> Unit
 ) {
     val passesState by viewModel.state.collectAsState()
 
@@ -24,6 +25,6 @@ fun PassesScreen(
         is PassesState.Failure -> ErrorComponent(state.message) {
             viewModel.loadNextPage()
         }
-        is PassesState.Success -> PassesScreenContent(state.requests, modifier, onProfileClicked)
+        is PassesState.Success -> PassesScreenContent(state.requests, modifier, onProfileClicked, onItemSelected = onItemSelected)
     }
 }
