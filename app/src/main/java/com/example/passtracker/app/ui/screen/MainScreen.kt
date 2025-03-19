@@ -71,6 +71,9 @@ fun MainScreen(
                 onItemSelected = { passId ->
                     navController.navigate(Screen.EditPassScreen.createRoute(passId))
                 },
+                onAddItemSelected = {
+                    navController.navigate(Screen.CreateScreen.route)
+                },
             )
         }
         composable(Screen.ProfileScreen.route) {
@@ -105,6 +108,9 @@ fun MainScreen(
                     navController.popBackStack()
                 },
                 viewModel = viewModel,
+                goOnPassScreen = {
+                    navController.navigate(Screen.PassesScreen.route)
+                }
             )
         }
 

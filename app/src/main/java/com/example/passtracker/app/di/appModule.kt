@@ -30,9 +30,8 @@ val appModule = module {
         CreateRequestViewModel(get())
     }
 
-    viewModel<EditRequestViewModel> { (id: String) ->
+    viewModel<EditRequestViewModel> {
         EditRequestViewModel(
-            id,
             get(),
             get(),
             get()

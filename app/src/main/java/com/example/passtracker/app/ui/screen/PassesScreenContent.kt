@@ -28,7 +28,8 @@ fun PassesScreenContent(
     requests: List<RequestShort>,
     modifier: Modifier = Modifier,
     onProfileClicked: () -> Unit = {},
-    onItemSelected: (String) -> Unit
+    onItemSelected: (String) -> Unit,
+    onAddItemSelected: () -> Unit
 ) {
 
     Column(
@@ -52,7 +53,7 @@ fun PassesScreenContent(
                 onItemSelected = onItemSelected
             )
             FloatingActionButton(
-                onClick = {},
+                onClick = onAddItemSelected,
                 modifier = Modifier.align(Alignment.BottomEnd).padding(24.dp),
                 containerColor = colorResource(R.color.red),
                 contentColor = colorResource(R.color.bottom_background)

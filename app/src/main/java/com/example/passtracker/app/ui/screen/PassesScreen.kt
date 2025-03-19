@@ -15,7 +15,8 @@ fun PassesScreen(
     viewModel: PassesViewModel,
     modifier: Modifier = Modifier,
     onProfileClicked: () -> Unit,
-    onItemSelected: (String) -> Unit
+    onItemSelected: (String) -> Unit,
+    onAddItemSelected: () -> Unit
 ) {
     val passesState by viewModel.state.collectAsState()
 
@@ -25,6 +26,6 @@ fun PassesScreen(
         is PassesState.Failure -> ErrorComponent(state.message) {
             viewModel.loadNextPage()
         }
-        is PassesState.Success -> PassesScreenContent(state.requests, modifier, onProfileClicked, onItemSelected = onItemSelected)
+        is PassesState.Success -> PassesScreenContent(state.requests, modifier, onProfileClicked, onItemSelected = onItemSelected, onAddItemSelected)
     }
 }

@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.passtracker.R
+import com.example.passtracker.app.ui.screen.parseAndFormatIsoDate
 import com.example.passtracker.domain.model.RequestShort
 
 @Composable
@@ -43,7 +44,7 @@ fun PassesCard(modifier: Modifier = Modifier, pass: RequestShort,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Учебная деятельность",
+                text = pass.typeRequest.toString(),
                 style = MaterialTheme.typography.labelLarge
             )
             Image(
@@ -58,8 +59,8 @@ fun PassesCard(modifier: Modifier = Modifier, pass: RequestShort,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-                DataTextField(date = pass.startDate)
-                DataTextField(startDate = false, date = pass.finishDate)
+                DataTextField(date = parseAndFormatIsoDate(pass.startDate))
+                DataTextField(startDate = false, date = parseAndFormatIsoDate(pass.finishDate))
         }
     }
 }

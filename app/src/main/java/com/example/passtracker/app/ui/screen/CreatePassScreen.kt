@@ -15,14 +15,13 @@ import com.example.passtracker.app.ui.component.LoadingComponent
 fun CreatePassScreen (
     viewModel: CreateRequestViewModel,
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
+    goOnPassScreen: () -> Unit = {}
     ) {
         val passState by viewModel.state.collectAsState()
 
         when(val state = passState) {
-            is CreateRequestState.Initial -> LoadingComponent()
-            is CreateRequestState.Loading -> LoadingComponent()
-            is CreateRequestState.Success -> CreatePassScreenContent(
+            is CreateRequestState.Initial -> CreatePassScreenContent(
                 modifier = modifier,
                 onBackClick = onBackClick,
                 onCreatePass = { updatedRequest ->
@@ -31,8 +30,11 @@ fun CreatePassScreen (
                     )
                 }
             )
+            is CreateRequestState.Loading -> LoadingComponent()
+            is CreateRequestState.Success -> goOnPassScreen()
+
             is CreateRequestState.Failure -> ErrorComponent(state.message) {
-//            viewModel.getProfile()
+                viewModel.setInitialState()
             }
         }
     }

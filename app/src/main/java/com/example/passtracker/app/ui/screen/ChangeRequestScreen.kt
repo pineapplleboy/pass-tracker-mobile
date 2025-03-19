@@ -11,32 +11,32 @@ import com.example.passtracker.app.ui.component.LoadingComponent
 import com.example.passtracker.domain.model.Request
 import com.example.passtracker.domain.model.RequestChange
 
-@Composable
-fun ChangeRequestScreen(
-    viewModel: EditRequestViewModel,
-    modifier: Modifier = Modifier
-) {
-    val editState by viewModel.state.collectAsState()
-
-    when(val state = editState) {
-        is EditRequestState.Initial -> LoadingComponent()
-        is EditRequestState.Loading -> LoadingComponent()
-
-        is EditRequestState.Failure -> ErrorComponent(state.message) {
-            viewModel.getRequest()
-        }
-
-        is EditRequestState.Success -> ChangeRequestScreenContent(
-            request = state.request
-        ) {
-            viewModel.changeRequest(it)
-        }
-
-        is EditRequestState.Deleted -> {
-            //Переход на экран со всеми пассами
-        }
-    }
-}
+//@Composable
+//fun ChangeRequestScreen(
+//    viewModel: EditRequestViewModel,
+//    modifier: Modifier = Modifier
+//) {
+//    val editState by viewModel.state.collectAsState()
+//
+//    when(val state = editState) {
+//        is EditRequestState.Initial -> LoadingComponent()
+//        is EditRequestState.Loading -> LoadingComponent()
+//
+//        is EditRequestState.Failure -> ErrorComponent(state.message) {
+//            viewModel.getRequest()
+//        }
+//
+//        is EditRequestState.Success -> ChangeRequestScreenContent(
+//            request = state.request
+//        ) {
+//            viewModel.changeRequest(it)
+//        }
+//
+//        is EditRequestState.Deleted -> {
+//            //Переход на экран со всеми пассами
+//        }
+//    }
+//}
 
 @Composable
 fun ChangeRequestScreenContent(

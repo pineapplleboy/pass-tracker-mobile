@@ -1,41 +1,90 @@
 package com.example.passtracker.app.ui.component
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.passtracker.R
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InputField(
+fun DataInputField(
     hint: String,
     iconId: Int,
     value: String,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit
 ) {
+    val context = LocalContext.current
 
+
+
+    // Календарь для хранения даты и времени
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    val displayFormat = SimpleDateFormat("d MMMM yyyy HH:mm", Locale("ru"))
+
+    val datePickerDialog = remember {
+        DatePickerDialog(
+            context,
+            { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+                calendar.set(selectedYear, selectedMonth, selectedDay)
+
+                val timePickerDialog = TimePickerDialog(
+                    context,
+                    { _: TimePicker, selectedHour: Int, selectedMinute: Int ->
+                        calendar.set(Calendar.HOUR_OF_DAY, selectedHour)
+                        calendar.set(Calendar.MINUTE, selectedMinute)
+                        calendar.set(Calendar.SECOND, 0)
+                        calendar.set(Calendar.MILLISECOND, 0)
+
+                        val formattedDateTime = displayFormat.format(calendar.time)
+                        onValueChange(formattedDateTime)
+                    },
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                    calendar.get(Calendar.MINUTE),
+                    true
+                )
+                timePickerDialog.show()
+            },
+            year,
+            month,
+            day
+        )
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -49,6 +98,7 @@ fun InputField(
             onValueChange = {
                 onValueChange(it)
             },
+            enabled = false,
             singleLine = true,
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
@@ -74,16 +124,10 @@ fun InputField(
             contentDescription = null,
             modifier = Modifier
                 .size(36.dp)
-                .padding(end = 12.dp)
+                .padding(end = 12.dp).clickable {
+                    datePickerDialog.show()
+                }
         )
     }
 }
 
-//@Preview
-//@Composable
-//fun Preview() {
-//    InputField(
-//        hint = "Негры",
-//        iconId = R.drawable.ic_launcher_background
-//    )
-//}
