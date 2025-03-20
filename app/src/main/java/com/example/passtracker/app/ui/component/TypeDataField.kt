@@ -80,14 +80,14 @@ fun TypeDataField (
             )
 
             Image(
-                painter = painterResource(iconId),
+                painter = if (!expanded) painterResource(iconId) else painterResource(R.drawable.up_arrow),
                 contentDescription = null,
                 modifier = if (editMode) Modifier
-                    .size(36.dp)
+                    .size(28.dp)
                     .padding(end = 12.dp).clickable {
                         expanded = true
                     } else  Modifier
-                    .size(36.dp)
+                    .size(28.dp)
                     .padding(end = 12.dp),
                 colorFilter = if (editMode) null else ColorFilter.tint(colorResource(R.color.dark_gray))
             )

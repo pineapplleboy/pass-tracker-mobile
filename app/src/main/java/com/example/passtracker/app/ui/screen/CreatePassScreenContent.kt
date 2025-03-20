@@ -123,7 +123,7 @@ fun CreatePassScreenContent(
             TypeDataField(
                 hint = "Тип пропуска",
                 value = typeRequest,
-                iconId = R.drawable.calendar_pass
+                iconId = R.drawable.down_arrow
             ) {
                 typeRequest = it
             }
