@@ -19,9 +19,11 @@ class PassesViewModel(
 
     private var currentPage = 1
     private val currentRequests = mutableListOf<RequestShort>()
-    private val pageSize = 5
+    private val pageSize = 1000
 
-    init {
+    fun loadAllPasses() {
+        currentPage = 1
+        currentRequests.clear()
         loadNextPage()
     }
 

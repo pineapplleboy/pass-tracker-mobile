@@ -21,11 +21,15 @@ fun PassesScreen(
 ) {
     val passesState by viewModel.state.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.loadAllPasses()
+    }
+
     when(val state = passesState) {
         is PassesState.Initial -> LoadingComponent()
         is PassesState.Loading -> LoadingComponent()
         is PassesState.Failure -> ErrorComponent(state.message) {
-            viewModel.loadNextPage()
+
         }
         is PassesState.Success -> PassesScreenContent(state.requests, modifier, onProfileClicked, onItemSelected = onItemSelected, onAddItemSelected)
     }
