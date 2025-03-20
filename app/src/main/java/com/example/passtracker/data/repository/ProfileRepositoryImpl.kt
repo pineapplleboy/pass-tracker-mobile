@@ -24,7 +24,7 @@ class ProfileRepositoryImpl(
             val response = api.register(user.toDTO())
             if (response.isSuccessful) {
                 response.body()?.let {
-                    sessionManager.saveTokens(it.accessToken, it.refreshToken)
+                    sessionManager.saveTokens(it.accessToken, it.refreshToken, it.accessTokenExpireTime)
                     AuthResult.Success
                 } ?: AuthResult.Error("Empty response")
             } else {
@@ -40,7 +40,7 @@ class ProfileRepositoryImpl(
             val response = api.login(user.toDTO())
             if (response.isSuccessful) {
                 response.body()?.let {
-                    sessionManager.saveTokens(it.accessToken, it.refreshToken)
+                    sessionManager.saveTokens(it.accessToken, it.refreshToken, it.accessTokenExpireTime)
                     AuthResult.Success
                 } ?: AuthResult.Error("Empty response")
             } else {
@@ -96,7 +96,7 @@ class ProfileRepositoryImpl(
 
             if (response.isSuccessful) {
                 response.body()?.let {
-                    sessionManager.saveTokens(it.accessToken, it.refreshToken)
+                    sessionManager.saveTokens(it.accessToken, it.refreshToken, it.accessTokenExpireTime)
                     return it.accessToken
                 }
             }

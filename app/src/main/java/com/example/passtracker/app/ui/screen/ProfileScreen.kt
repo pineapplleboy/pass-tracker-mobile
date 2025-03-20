@@ -24,7 +24,7 @@ fun ProfileScreen(
             modifier = modifier,
             onBackClick = onBackClick,
             profile = state.profile,
-//            onLogoutClick = viewModel.logout()
+            onLogoutClick = { viewModel.logout() }
         )
         is ProfileState.Failure -> ErrorComponent(state.message) {
             viewModel.getProfile()

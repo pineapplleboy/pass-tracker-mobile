@@ -23,7 +23,7 @@ import retrofit2.http.Query
 
 interface PassTrackerAPI {
 
-    @GET("user/login-refresh")
+    @POST("user/login-refresh")
     suspend fun refreshToken(@Body refreshTokenDTO: RefreshTokenDTO): Response<TokenDTO>
 
     @POST("user/register")

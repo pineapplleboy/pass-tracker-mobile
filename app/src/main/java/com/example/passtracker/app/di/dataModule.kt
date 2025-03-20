@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.passtracker.data.constants.DataConstants
 import com.example.passtracker.data.network.PassTrackerAPI
 import com.example.passtracker.data.network.SessionManager
-import com.example.passtracker.data.network.TokenInterceptor
+import com.example.passtracker.data.network.AuthInterceptor
 import com.example.passtracker.data.network.UnsafeOkHttpClient
 import com.example.passtracker.data.repository.ProfileRepositoryImpl
 import com.example.passtracker.data.repository.RequestRepositoryImpl
@@ -21,7 +21,7 @@ val dataModule = module {
     single { androidContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE) }
     single { SessionManager(androidContext()) }
 
-    single<okhttp3.Interceptor> { TokenInterceptor(get(), get()) }
+    single<okhttp3.Interceptor> { AuthInterceptor(get(), get()) }
 
     single<OkHttpClient> {
         UnsafeOkHttpClient.getUnsafeOkHttpClient(get())

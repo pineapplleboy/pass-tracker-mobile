@@ -24,7 +24,6 @@ class ProfileViewModel(
     }
 
     fun getProfile() {
-
         viewModelScope.launch {
             _state.value = ProfileState.Loading
 
@@ -33,6 +32,26 @@ class ProfileViewModel(
                 val body = res.getOrNull()
                 if(body != null) {
                     _state.value = ProfileState.Success(body)
+                }
+                else {
+                    _state.value = ProfileState.Failure("Empty body")
+                }
+            }
+            else {
+                _state.value = ProfileState.Failure(res.exceptionOrNull()?.message)
+            }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            _state.value = ProfileState.Loading
+
+            val res = logoutUseCase()
+            if(res.isSuccess) {
+                val body = res.getOrNull()
+                if(body != null) {
+                    getProfile()
                 }
                 else {
                     _state.value = ProfileState.Failure("Empty body")
