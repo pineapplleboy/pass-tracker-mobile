@@ -33,7 +33,10 @@ class AuthInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
 
-        if (originalRequest.url.encodedPath == "/user/login-refresh") {
+        if (originalRequest.url.encodedPath == "/user/login-refresh"
+            || originalRequest.url.encodedPath == "/user/logout"
+            || originalRequest.url.encodedPath == "/user/login"
+            || originalRequest.url.encodedPath == "/user/register" ) {
             return chain.proceed(originalRequest)
         }
 
@@ -79,6 +82,10 @@ class AuthInterceptor(
                     )
                     return@runBlocking tokenDTO.accessToken
                 }
+            }
+            else {
+                sessionManager.clearTokens()
+                redirectToLogin()
             }
             null
         }
