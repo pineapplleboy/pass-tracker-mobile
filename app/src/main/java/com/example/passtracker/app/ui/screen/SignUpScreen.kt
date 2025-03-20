@@ -134,7 +134,8 @@ fun SignUpScreenContent(
             hint = stringResource(R.string.password),
             iconId = R.drawable.ic_eye,
             value = password,
-            modifier = Modifier.padding(top = 16.dp, start = 24.dp, end = 24.dp)
+            modifier = Modifier.padding(top = 16.dp, start = 24.dp, end = 24.dp),
+            isPasswordField = true
         ) {
             password = it
         }
@@ -142,7 +143,8 @@ fun SignUpScreenContent(
             hint = stringResource(R.string.confirm_password),
             iconId = R.drawable.ic_eye,
             value = confirmation,
-            modifier = Modifier.padding(top = 16.dp, start = 24.dp, end = 24.dp)
+            modifier = Modifier.padding(top = 16.dp, start = 24.dp, end = 24.dp),
+            isPasswordField = true
         ) {
             confirmation = it
         }

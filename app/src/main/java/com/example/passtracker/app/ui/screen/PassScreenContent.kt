@@ -22,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -44,6 +46,10 @@ import com.example.passtracker.domain.model.Request
 import com.example.passtracker.domain.model.RequestChange
 import com.example.passtracker.domain.model.StatusRequest
 import com.example.passtracker.domain.model.TypeRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.InputStream
 
 @Composable
@@ -60,6 +66,15 @@ fun PassScreenContent(
     var typeRequest by remember { mutableStateOf(request.typeRequest) }
     var photo by remember {
         mutableStateOf<String?>(request.photo)
+    }
+    var photoBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+
+    LaunchedEffect(photo) {
+        if (photo != null) {
+            photoBitmap = base64StringToImageBitmap(photo)
+        } else {
+            photoBitmap = null
+        }
     }
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -177,11 +192,6 @@ fun PassScreenContent(
                 finishDate = it
             }
             if (photo != null) {
-                val photoBitmap by remember(photo) {
-                    derivedStateOf {
-                        base64StringToImageBitmap(photo!!)
-                    }
-                }
                 if (photoBitmap != null) {
                     Box(
                         modifier = Modifier.wrapContentSize().weight(1f).padding(top = 24.dp, bottom = 24.dp)
@@ -192,9 +202,14 @@ fun PassScreenContent(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clickable {
-                                    val uri = base64ToUri(context, photo!!)
-                                    if (uri != null) {
-                                        openImageInGallery(context, uri.toString())
+                                    // Асинхронно получаем URI и открываем галерею
+                                    CoroutineScope(Dispatchers.Main).launch {
+                                        val uri = withContext(Dispatchers.IO) {
+                                            base64ToUri(context, photo!!)
+                                        }
+                                        if (uri != null) {
+                                            openImageInGallery(context, uri.toString())
+                                        }
                                     }
                                 }
                         )

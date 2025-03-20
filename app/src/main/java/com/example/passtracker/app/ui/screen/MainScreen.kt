@@ -84,7 +84,11 @@ fun MainScreen(
 
             ProfileScreen(
                 onBackClick = {
-                    navController.popBackStack()
+                    navController.navigate(Screen.PassesScreen.route) {
+                        popUpTo(Screen.PassesScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 },
                 viewModel = viewModel
             )
@@ -94,7 +98,11 @@ fun MainScreen(
             val passId = backStackEntry.arguments?.getString("id") ?: return@composable
             PassScreen(
                 onBackClick = {
-                    navController.popBackStack()
+                    navController.navigate(Screen.PassesScreen.route) {
+                        popUpTo(Screen.PassesScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 },
                 viewModel = viewModel,
                 passId = passId
@@ -108,7 +116,11 @@ fun MainScreen(
                 },
                 viewModel = viewModel,
                 goOnPassScreen = {
-                    navController.navigate(Screen.PassesScreen.route)
+                    navController.navigate(Screen.PassesScreen.route) {
+                        popUpTo(Screen.PassesScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }

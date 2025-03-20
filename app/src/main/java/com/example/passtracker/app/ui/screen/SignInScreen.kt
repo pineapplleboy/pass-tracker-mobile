@@ -96,7 +96,8 @@ fun SignInScreenContent(
             hint = stringResource(R.string.password),
             iconId = R.drawable.ic_eye,
             value = password,
-            modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp)
+            modifier = Modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp),
+            isPasswordField = true
         ) {
             password = it
         }

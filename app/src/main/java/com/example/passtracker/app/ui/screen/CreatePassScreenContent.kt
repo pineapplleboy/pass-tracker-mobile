@@ -51,10 +51,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
+import coil.decode.DecodeUtils.calculateInSampleSize
+import coil.size.Scale
 import com.example.passtracker.app.ui.component.TypeDataField
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -72,7 +79,15 @@ fun CreatePassScreenContent(
     var typeRequest by remember { mutableStateOf("") }
     var photo by remember { mutableStateOf<String?>(null) }
     val access by remember { derivedStateOf { startDate.isNotBlank() && finishDate.isNotBlank() && typeRequest.isNotBlank() } }
+    var photoBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
 
+    LaunchedEffect(photo) {
+        if (photo != null) {
+            photoBitmap = base64StringToImageBitmap(photo)
+        } else {
+            photoBitmap = null
+        }
+    }
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -146,11 +161,6 @@ fun CreatePassScreenContent(
 
 
             if (photo != null) {
-                val photoBitmap by remember(photo) {
-                    derivedStateOf {
-                        base64StringToImageBitmap(photo!!)
-                    }
-                }
                 if (photoBitmap != null) {
                     Box(
                         modifier = Modifier.weight(1f)
@@ -161,9 +171,13 @@ fun CreatePassScreenContent(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(top = 24.dp).clickable {
-                                    val uri = base64ToUri(context, photo!!)
-                                    if (uri != null) {
-                                        openImageInGallery(context, uri.toString())
+                                    CoroutineScope(Dispatchers.Main).launch {
+                                        val uri = withContext(Dispatchers.IO) {
+                                            base64ToUri(context, photo!!)
+                                        }
+                                        if (uri != null) {
+                                            openImageInGallery(context, uri.toString())
+                                        }
                                     }
                                 }
 
@@ -245,10 +259,23 @@ fun parseAndFormatIsoDate(isoDate: String): String {
     return displayFormat.format(date)
 }
 
-fun base64StringToImageBitmap(base64String: String?): ImageBitmap? {
+suspend fun base64StringToImageBitmap(base64String: String?): ImageBitmap? {
     return try {
         val byteArray = Base64.decode(base64String, Base64.DEFAULT)
-        val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        val options = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, this)
+
+            inSampleSize = calculateInSampleSize(
+                srcWidth = outWidth,
+                srcHeight = outHeight,
+                dstWidth = 512,
+                dstHeight = 512,
+                scale = Scale.FIT
+            )
+            inJustDecodeBounds = false
+        }
+        val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, options)
         bitmap?.asImageBitmap()
     } catch (e: Exception) {
         e.printStackTrace()
@@ -256,11 +283,14 @@ fun base64StringToImageBitmap(base64String: String?): ImageBitmap? {
     }
 }
 
-fun base64ToUri(context: Context, base64String: String): Uri? {
-    return try {
+suspend fun base64ToUri(context: Context, base64String: String): Uri? = withContext(Dispatchers.IO) {
+    try {
         val byteArray = Base64.decode(base64String, Base64.DEFAULT)
 
-        val tempFile = File(context.cacheDir, "temp_image_${System.currentTimeMillis()}.jpg")
+        val tempFile = File.createTempFile("temp_image_", ".jpg", context.cacheDir).apply {
+            deleteOnExit()
+        }
+
         FileOutputStream(tempFile).use { outputStream ->
             outputStream.write(byteArray)
         }

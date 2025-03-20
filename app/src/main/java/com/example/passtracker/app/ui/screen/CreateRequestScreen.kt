@@ -10,31 +10,31 @@ import com.example.passtracker.app.ui.component.ErrorComponent
 import com.example.passtracker.app.ui.component.LoadingComponent
 import com.example.passtracker.domain.model.RequestCreate
 
-@Composable
-fun CreateRequestScreen(
-    viewModel: CreateRequestViewModel,
-    modifier: Modifier = Modifier
-) {
-    val createState by viewModel.state.collectAsState()
-
-    when(val state = createState) {
-        is CreateRequestState.Initial -> CreateRequestScreenContent(modifier) {
-            viewModel.createRequest(it)
-        }
-        is CreateRequestState.Loading -> LoadingComponent()
-        is CreateRequestState.Failure -> ErrorComponent(state.message) {
-            viewModel.setInitialState()
-        }
-        is CreateRequestState.Success -> {
-            //отправка на экран со всеми пассами
-        }
-    }
-}
-
-@Composable
-fun CreateRequestScreenContent(
-    modifier: Modifier = Modifier,
-    onCreateRequest: (RequestCreate) -> Unit
-) {
-
-}
+//@Composable
+//fun CreateRequestScreen(
+//    viewModel: CreateRequestViewModel,
+//    modifier: Modifier = Modifier
+//) {
+//    val createState by viewModel.state.collectAsState()
+//
+//    when(val state = createState) {
+//        is CreateRequestState.Initial -> CreateRequestScreenContent(modifier) {
+//            viewModel.createRequest(it)
+//        }
+//        is CreateRequestState.Loading -> LoadingComponent()
+//        is CreateRequestState.Failure -> ErrorComponent(state.message) {
+//            viewModel.setInitialState()
+//        }
+//        is CreateRequestState.Success -> {
+//            //отправка на экран со всеми пассами
+//        }
+//    }
+//}
+//
+//@Composable
+//fun CreateRequestScreenContent(
+//    modifier: Modifier = Modifier,
+//    onCreateRequest: (RequestCreate) -> Unit
+//) {
+//
+//}

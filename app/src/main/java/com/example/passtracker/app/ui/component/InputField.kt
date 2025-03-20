@@ -2,12 +2,14 @@ package com.example.passtracker.app.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -20,8 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,9 +38,11 @@ fun InputField(
     iconId: Int,
     value: String,
     modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit
-) {
+    isPasswordField: Boolean = false,
+    onValueChange: (String) -> Unit,
 
+    ) {
+    var passwordVisible by remember { mutableStateOf(!isPasswordField) }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -50,6 +57,7 @@ fun InputField(
                 onValueChange(it)
             },
             singleLine = true,
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
@@ -69,13 +77,18 @@ fun InputField(
             modifier = Modifier.weight(1f)
         )
 
-        Image(
-            painter = painterResource(iconId),
+        Image(painter = when {
+            isPasswordField && passwordVisible -> painterResource(R.drawable.eye_on)
+            isPasswordField && !passwordVisible -> painterResource(iconId)
+            else -> painterResource(iconId)
+        },
             contentDescription = null,
-            modifier = Modifier
-                .size(36.dp)
-                .padding(end = 12.dp)
-        )
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.tertiary),
+            modifier = if (!isPasswordField) Modifier
+                .padding(end = 16.dp) else Modifier
+                .padding(end = 16.dp)
+                .clickable { passwordVisible = !passwordVisible })
+
     }
 }
 
