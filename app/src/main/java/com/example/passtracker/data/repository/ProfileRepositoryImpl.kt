@@ -51,17 +51,13 @@ class ProfileRepositoryImpl(
         }
     }
 
-    override suspend fun logout(): AuthResult {
-        return try {
-            val response = api.logout()
-            if (response.isSuccessful) {
-                AuthResult.Success
-            } else {
-                AuthResult.Error("Error: ${response.code()}")
-            }
-        } catch (e: Exception) {
-            AuthResult.Error(e.localizedMessage ?: "Unknown error")
-        }
+    override suspend fun logout(): Result<Unit> {
+        return safeApiCall(
+            apiCall = {
+                api.logout()
+            },
+            transform = { }
+        )
     }
 
     override suspend fun getProfile(): Result<Profile> {

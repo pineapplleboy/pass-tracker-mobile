@@ -10,6 +10,7 @@ import com.example.passtracker.domain.usecase.GetAllUserRequestUseCase
 import com.example.passtracker.domain.usecase.GetProfileUseCase
 import com.example.passtracker.domain.usecase.GetRequestInfoUseCase
 import com.example.passtracker.domain.usecase.LoginUseCase
+import com.example.passtracker.domain.usecase.LogoutUseCase
 import com.example.passtracker.domain.usecase.RegisterUseCase
 import org.koin.dsl.module
 
@@ -56,5 +57,9 @@ val domainModule = module {
 
     factory<GetRequestInfoUseCase>{
         GetRequestInfoUseCase(get())
+    }
+
+    factory<LogoutUseCase>{
+        LogoutUseCase(get())
     }
 }

@@ -19,7 +19,7 @@ val appModule = module {
     }
 
     viewModel<ProfileViewModel> {
-        ProfileViewModel(get())
+        ProfileViewModel(get(), get())
     }
 
     viewModel<PassesViewModel> {

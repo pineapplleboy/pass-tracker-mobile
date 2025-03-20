@@ -5,13 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.passtracker.app.presentation.state.ProfileState
 import com.example.passtracker.domain.usecase.GetAllUserRequestUseCase
 import com.example.passtracker.domain.usecase.GetProfileUseCase
+import com.example.passtracker.domain.usecase.LogoutUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
-    private val getProfileUseCase: GetProfileUseCase
+    private val getProfileUseCase: GetProfileUseCase,
+    private val logoutUseCase: LogoutUseCase
 ): ViewModel() {
 
     private val _state = MutableStateFlow<ProfileState>(ProfileState.Initial)

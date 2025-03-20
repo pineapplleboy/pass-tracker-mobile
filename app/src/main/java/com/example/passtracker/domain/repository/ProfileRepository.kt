@@ -13,7 +13,7 @@ interface ProfileRepository {
 
     suspend fun login(user: UserLogin): AuthResult
 
-    suspend fun logout(): AuthResult
+    suspend fun logout(): Result<Unit>
 
     suspend fun getProfile(): Result<Profile>
 
