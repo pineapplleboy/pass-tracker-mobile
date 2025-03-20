@@ -3,6 +3,7 @@ package com.example.passtracker.data.network
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.passtracker.app.ui.activity.MainActivity
 import com.example.passtracker.data.constants.DataConstants

@@ -30,7 +30,9 @@ fun PassScreen(
             modifier = modifier,
             onBackClick = onBackClick,
             request = state.request,
-            onDeletePass = { viewModel.deleteRequest(id = passId) },
+            onDeletePass = {
+                viewModel.deleteRequest(id = passId)
+            },
             onEditPass = { updatedRequest ->
                 viewModel.changeRequest(
                     request = updatedRequest,
@@ -40,10 +42,12 @@ fun PassScreen(
         )
 
         is EditRequestState.Failure -> ErrorComponent(state.message) {
-//            viewModel.getProfile()
+            viewModel.getRequest(passId)
         }
 
-        EditRequestState.Deleted -> onBackClick()
+        EditRequestState.Deleted -> LaunchedEffect(Unit) {
+            onBackClick()
+        }
     }
 }
 
