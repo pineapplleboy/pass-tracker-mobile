@@ -62,7 +62,7 @@ fun PassScreen(
 //            viewModel.getProfile()
         }
 
-        EditRequestState.Deleted -> Unit
+        EditRequestState.Deleted -> onBackClick()
     }
 }
 

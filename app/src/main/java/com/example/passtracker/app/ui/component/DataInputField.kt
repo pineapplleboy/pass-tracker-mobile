@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -43,13 +44,14 @@ fun DataInputField(
     iconId: Int,
     value: String,
     modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit
+    editMode: Boolean = true,
+    onValueChange: (String) -> Unit,
+
 ) {
     val context = LocalContext.current
 
 
 
-    // Календарь для хранения даты и времени
     val calendar = Calendar.getInstance()
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH)
@@ -122,11 +124,14 @@ fun DataInputField(
         Image(
             painter = painterResource(iconId),
             contentDescription = null,
-            modifier = Modifier
+            modifier = if (editMode) Modifier
                 .size(36.dp)
                 .padding(end = 12.dp).clickable {
                     datePickerDialog.show()
-                }
+                } else Modifier
+                .size(36.dp)
+                .padding(end = 12.dp),
+            colorFilter = if (editMode) null else ColorFilter.tint(colorResource(R.color.dark_gray))
         )
     }
 }

@@ -6,12 +6,14 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -28,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -35,9 +38,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.passtracker.R
 import com.example.passtracker.app.ui.component.DataInputField
+import com.example.passtracker.app.ui.component.TypeDataField
 import com.example.passtracker.domain.model.Profile
 import com.example.passtracker.domain.model.Request
 import com.example.passtracker.domain.model.RequestChange
+import com.example.passtracker.domain.model.StatusRequest
+import com.example.passtracker.domain.model.TypeRequest
 import java.io.InputStream
 
 @Composable
@@ -77,7 +83,7 @@ fun PassScreenContent(
     var editMode by remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
-            modifier
+            Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)
         ) {
@@ -90,6 +96,16 @@ fun PassScreenContent(
                     tint = colorResource(R.color.black)
                 )
             }
+            Image(
+                painter = painterResource(R.drawable.circle),
+                contentDescription = null,
+                colorFilter = when(request.statusRequest) {
+                    StatusRequest.Declined -> ColorFilter.tint(colorResource(R.color.red))
+                    StatusRequest.Pending -> ColorFilter.tint(colorResource(R.color.yellow))
+                    StatusRequest.Accepted -> ColorFilter.tint(colorResource(R.color.green))
+                },
+                modifier = Modifier.padding(end = 8.dp, top = 12.dp)
+            )
             Text(
                 text = "Пропуск",
                 style = MaterialTheme.typography.bodyLarge,
@@ -99,6 +115,7 @@ fun PassScreenContent(
                     .align(Alignment.CenterVertically)
                     .weight(1f)
             )
+
             IconButton(
                 onClick = { editMode = !editMode },
             ) {
@@ -124,11 +141,29 @@ fun PassScreenContent(
                 .fillMaxSize()
                 .padding(start = 24.dp, end = 24.dp, top = 24.dp)
         ) {
+            TypeDataField(
+                hint = "Тип пропуска",
+                value = when(typeRequest) {
+                    TypeRequest.EducationalActivity -> "Учебная деятельность"
+                    TypeRequest.Disease -> "Болезнь"
+                    TypeRequest.FamilyCircumstances-> "Семейные обстоятельства"
+                },
+                iconId = R.drawable.calendar_pass,
+                editMode = editMode
+            ) {
+                typeRequest = when (it) {
+                    "Учебная деятельность" -> TypeRequest.EducationalActivity
+                    "По болезни" -> TypeRequest.Disease
+                    "По семейным обстоятельствам" -> TypeRequest.FamilyCircumstances
+                    else -> TypeRequest.EducationalActivity
+                }
+            }
             DataInputField(
                 hint = "Дата начала",
                 value = startDate,
                 iconId = R.drawable.calendar_pass,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 8.dp),
+                editMode = editMode
             ) {
                 startDate = it
             }
@@ -136,7 +171,8 @@ fun PassScreenContent(
                 hint = "Дата окончания",
                 value = finishDate,
                 iconId = R.drawable.calendar_pass,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 8.dp),
+                editMode = editMode
             ) {
                 finishDate = it
             }
@@ -147,19 +183,31 @@ fun PassScreenContent(
                     }
                 }
                 if (photoBitmap != null) {
-                    Image(
-                        bitmap = photoBitmap!!,
-                        contentDescription = "Выбранное фото",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(top = 24.dp, bottom = 24.dp).padding(top = 24.dp).clickable {
-                                val uri = base64ToUri(context, photo!!)
-                                if (uri != null) {
-                                    openImageInGallery(context, uri.toString())
+                    Box(
+                        modifier = Modifier.wrapContentSize().weight(1f).padding(top = 24.dp, bottom = 24.dp)
+                    ) {
+                        Image(
+                            bitmap = photoBitmap!!,
+                            contentDescription = "Выбранное фото",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clickable {
+                                    val uri = base64ToUri(context, photo!!)
+                                    if (uri != null) {
+                                        openImageInGallery(context, uri.toString())
+                                    }
                                 }
-                            }
-                    )
+                        )
+                        if (editMode){
+                            Icon(
+                                painter = painterResource(R.drawable.close),
+                                contentDescription = null,
+                                modifier = Modifier.align(Alignment.TopEnd).clickable { photo = null }
+                            )
+                        }
+
+                    }
+
                 } else {
                     Text(
                         text = "Не удалось загрузить фото",

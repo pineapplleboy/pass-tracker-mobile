@@ -48,7 +48,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
@@ -117,7 +119,7 @@ fun CreatePassScreenContent(
         }
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(start = 24.dp, end = 24.dp, top = 24.dp)) {
+            .padding(start = 24.dp, end = 24.dp)) {
             TypeDataField(
                 hint = "Тип пропуска",
                 value = typeRequest,
@@ -134,7 +136,7 @@ fun CreatePassScreenContent(
                 startDate = it
             }
             DataInputField(
-                hint = "Дата конца",
+                hint = "Дата окончания",
                 value = finishDate,
                 iconId = R.drawable.calendar_pass,
                 modifier = Modifier.padding(top = 8.dp)
@@ -150,19 +152,28 @@ fun CreatePassScreenContent(
                     }
                 }
                 if (photoBitmap != null) {
-                    Image(
-                        bitmap = photoBitmap!!,
-                        contentDescription = "Выбранное фото",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(top = 24.dp).clickable {
-                                val uri = base64ToUri(context, photo!!)
-                                if (uri != null) {
-                                    openImageInGallery(context, uri.toString())
+                    Box(
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Image(
+                            bitmap = photoBitmap!!,
+                            contentDescription = "Выбранное фото",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 24.dp).clickable {
+                                    val uri = base64ToUri(context, photo!!)
+                                    if (uri != null) {
+                                        openImageInGallery(context, uri.toString())
+                                    }
                                 }
-                            }
-                    )
+
+                        )
+                        Icon(
+                            painter = painterResource(R.drawable.close),
+                            contentDescription = null,
+                            modifier = Modifier.align(Alignment.TopEnd).padding(top = 24.dp).clickable { photo = null }
+                        )
+                    }
                 } else {
                     Text(
                         text = "Не удалось загрузить фото",

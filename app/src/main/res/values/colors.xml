@@ -13,6 +13,8 @@
     <color name="bottom_background">#F5F6F8</color>
 
     <color name="red">#FF3951</color>
+    <color name="yellow">#FFD739</color>
+    <color name="green">#69FF1E</color>
 
     <color name="light_black">#FF252525</color>
 </resources>

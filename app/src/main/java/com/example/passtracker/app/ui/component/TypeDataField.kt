@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ fun TypeDataField (
     iconId: Int,
     value: String,
     modifier: Modifier = Modifier,
+    editMode: Boolean = true,
     onValueChange: (String) -> Unit
 ) {
 
@@ -80,11 +82,14 @@ fun TypeDataField (
             Image(
                 painter = painterResource(iconId),
                 contentDescription = null,
-                modifier = Modifier
+                modifier = if (editMode) Modifier
                     .size(36.dp)
                     .padding(end = 12.dp).clickable {
                         expanded = true
-                    }
+                    } else  Modifier
+                    .size(36.dp)
+                    .padding(end = 12.dp),
+                colorFilter = if (editMode) null else ColorFilter.tint(colorResource(R.color.dark_gray))
             )
         }
 
