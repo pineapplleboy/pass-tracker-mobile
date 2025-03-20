@@ -25,7 +25,8 @@ import com.example.passtracker.ui.component.ProfileTopBar
 fun ProfileScreenContent(
     profile: Profile,
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {}
 ) {
     var editMode by remember { mutableStateOf(false) }
     Column(
@@ -33,7 +34,7 @@ fun ProfileScreenContent(
             .fillMaxSize()
             .background(color = colorResource(R.color.red))
     ) {
-        ProfileTopBar(modifier = Modifier.padding(top = 24.dp), onBackClick)
+        ProfileTopBar(modifier = Modifier.padding(top = 24.dp), onBackClick, onLogoutClick)
         Column(
             modifier = Modifier
                 .fillMaxSize()

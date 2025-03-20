@@ -148,7 +148,7 @@ fun PassScreenContent(
                     TypeRequest.Disease -> "Болезнь"
                     TypeRequest.FamilyCircumstances-> "Семейные обстоятельства"
                 },
-                iconId = R.drawable.calendar_pass,
+                iconId = R.drawable.down_arrow,
                 editMode = editMode
             ) {
                 typeRequest = when (it) {
@@ -208,11 +208,14 @@ fun PassScreenContent(
 
                     }
 
-                } else {
-                    Text(
-                        text = "Не удалось загрузить фото",
-                        color = Color.Red,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                } else if (editMode){
+                    Icon(
+                        painter = painterResource(R.drawable.add_circle),
+                        contentDescription = null,
+                        modifier = Modifier.weight(1f).clickable {
+                            launcher.launch("image/*")
+                        }.align(Alignment.CenterHorizontally),
+                        tint = colorResource(R.color.dark_gray),
                     )
                 }
             } else if (editMode) {

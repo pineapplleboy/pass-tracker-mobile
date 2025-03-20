@@ -45,11 +45,7 @@ fun ProfileBody(
             input = profile.email,
             editMode = editMode
         )
-        ProfileTextField(
-            modifier = Modifier, hint = stringResource(R.string.password),
-            input = "",
-            editMode = editMode
-        )
+
         Box(
             modifier = Modifier
                 .fillMaxSize()

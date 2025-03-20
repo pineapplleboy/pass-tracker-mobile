@@ -1,5 +1,6 @@
 package com.example.passtracker.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,10 +21,10 @@ import androidx.compose.ui.unit.sp
 import com.example.passtracker.R
 
 @Composable
-fun ProfileTopBar(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
+fun ProfileTopBar(modifier: Modifier = Modifier, onClick: () -> Unit = {}, onLogout: () -> Unit = {}) {
     Row(modifier
         .fillMaxWidth()
-        .padding(top = 24.dp)) {
+        ) {
         IconButton(
             onClick = onClick
         ) {
@@ -38,7 +39,15 @@ fun ProfileTopBar(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
             style = MaterialTheme.typography.bodyLarge,
             fontSize = 20.sp,
             color = colorResource(R.color.white),
-            modifier = Modifier.align(Alignment.CenterVertically)
+            modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
+        )
+        Icon(
+            painterResource(R.drawable.logout_bottom_ic),
+            contentDescription = null,
+            tint = colorResource(R.color.white),
+            modifier = Modifier.padding(end = 24.dp).align(Alignment.CenterVertically).clickable {
+                onLogout()
+            }
         )
     }
 }

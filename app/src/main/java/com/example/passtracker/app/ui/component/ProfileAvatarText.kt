@@ -30,16 +30,6 @@ fun ProfileAvatarText(
                 contentDescription = null,
                 modifier = Modifier
             )
-            Image(
-                painterResource(R.drawable.edit_ic),
-                contentDescription = null,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(end = 8.dp, bottom = 8.dp)
-                    .clickable {
-                        editModeClick()
-                    }
-            )
         }
 
         Text(
