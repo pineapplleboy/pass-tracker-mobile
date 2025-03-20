@@ -29,11 +29,14 @@ class RegisterViewModel(
             val res = registerUseCase(user)
             if(res == AuthResult.Success) {
                 _state.value = RegisterState.Success
-                //Перемещаемся на экран профиля
             }
             else {
                 _state.value = RegisterState.Failure((res as AuthResult.Error).message)
             }
         }
+    }
+
+    fun setInitialState() {
+        _state.value = RegisterState.Initial
     }
 }

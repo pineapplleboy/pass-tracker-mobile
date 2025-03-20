@@ -34,11 +34,14 @@ class LoginViewModel(
             val res = loginUseCase(user)
             if(res == AuthResult.Success) {
                 _state.value = LoginState.Success
-                //Перемещаемся на экран профиля
             }
             else {
                 _state.value = LoginState.Failure((res as AuthResult.Error).message)
             }
         }
+    }
+
+    fun setInitialState() {
+        _state.value = LoginState.Initial
     }
 }

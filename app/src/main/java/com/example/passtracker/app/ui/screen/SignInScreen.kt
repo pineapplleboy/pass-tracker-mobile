@@ -57,7 +57,8 @@ fun SignInScreen(
 
         is LoginState.Loading -> LoadingComponent()
 
-        is LoginState.Failure -> ErrorComponent(state.message) {
+        is LoginState.Failure -> ErrorComponent("Неверные данные") {
+            viewModel.setInitialState()
         }
         is LoginState.Success -> Unit
 

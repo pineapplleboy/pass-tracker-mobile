@@ -33,27 +33,31 @@ class AuthInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
 
-        if (originalRequest.url.encodedPath == "/user/login-refresh"
-            || originalRequest.url.encodedPath == "/user/logout"
-            || originalRequest.url.encodedPath == "/user/login"
-            || originalRequest.url.encodedPath == "/user/register" ) {
+        if (originalRequest.url.encodedPath in listOf("/user/login-refresh", "/user/login", "/user/register")) {
             return chain.proceed(originalRequest)
         }
 
         val accessToken = sessionManager.getAccessToken()
+        val refreshToken = sessionManager.getRefreshToken()
         val accessTokenExpireTime = sessionManager.getAccessTokenExpireTime()
 
         val currentTime = System.currentTimeMillis()
-
         val localExpireTime = accessTokenExpireTime?.let {
-            java.time.Instant.parse(it)
-                .toEpochMilli()
+            java.time.Instant.parse(it).toEpochMilli()
         }
 
         val token = if (accessToken != null && localExpireTime != null && currentTime < localExpireTime) {
             accessToken
+        } else if (refreshToken != null) {
+            runBlocking { refreshAccessToken() }
         } else {
-            runBlocking { refreshAccessToken() } ?: return unauthorizedResponse(originalRequest)
+            null
+        }
+
+        if (token == null) {
+            sessionManager.clearTokens()
+            redirectToLogin()
+            return unauthorizedResponse(originalRequest)
         }
 
         val newRequest = originalRequest.newBuilder()
@@ -63,10 +67,21 @@ class AuthInterceptor(
         val response = chain.proceed(newRequest)
 
         if (response.code == 401) {
+            sessionManager.clearTokens()
             redirectToLogin()
         }
 
         return response
+    }
+
+    private fun unauthorizedResponse(request: Request): Response {
+        return Response.Builder()
+            .request(request)
+            .protocol(okhttp3.Protocol.HTTP_1_1)
+            .code(401)
+            .message("Unauthorized")
+            .body(okhttp3.ResponseBody.create(null, ""))
+            .build()
     }
 
     private fun refreshAccessToken(): String? {
@@ -83,22 +98,9 @@ class AuthInterceptor(
                     return@runBlocking tokenDTO.accessToken
                 }
             }
-            else {
-                sessionManager.clearTokens()
-                redirectToLogin()
-            }
+
             null
         }
-    }
-
-    private fun unauthorizedResponse(request: Request): Response {
-        return Response.Builder()
-            .request(request)
-            .protocol(okhttp3.Protocol.HTTP_1_1)
-            .code(401)
-            .message("Unauthorized")
-            .body(okhttp3.ResponseBody.create(null, ""))
-            .build()
     }
 
     private fun redirectToLogin() {

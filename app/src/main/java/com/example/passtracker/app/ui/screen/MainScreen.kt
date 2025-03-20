@@ -18,13 +18,16 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
-    NavHost(navController = navController, startDestination = Screen.SignInScreen.route) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = Screen.SignInScreen.route
+    ) {
         composable(Screen.SignInScreen.route) {
 
             val viewModel = koinViewModel<LoginViewModel>()
 
             SignInScreen(
-                modifier = modifier,
                 viewModel = viewModel,
                 onClicked = {
                     navController.navigate(Screen.SignUpScreen.route) {
@@ -42,7 +45,6 @@ fun MainScreen(
             val viewModel = koinViewModel<RegisterViewModel>()
 
             SignUpScreen(
-                modifier = modifier,
                 viewModel = viewModel,
                 onClicked = {
                     navController.navigate(Screen.SignInScreen.route) {
@@ -64,7 +66,7 @@ fun MainScreen(
             val viewModel = koinViewModel<PassesViewModel>()
 
             PassesScreen(
-                viewModel, modifier,
+                viewModel,
                 onProfileClicked = {
                     navController.navigate(Screen.ProfileScreen.route)
                 },
@@ -81,7 +83,6 @@ fun MainScreen(
             val viewModel = koinViewModel<ProfileViewModel>()
 
             ProfileScreen(
-                modifier = modifier,
                 onBackClick = {
                     navController.popBackStack()
                 },
@@ -92,7 +93,6 @@ fun MainScreen(
             val viewModel = koinViewModel<EditRequestViewModel>()
             val passId = backStackEntry.arguments?.getString("id") ?: return@composable
             PassScreen(
-                modifier = modifier,
                 onBackClick = {
                     navController.popBackStack()
                 },
@@ -103,7 +103,6 @@ fun MainScreen(
         composable(Screen.CreateScreen.route) {
             val viewModel = koinViewModel<CreateRequestViewModel>()
             CreatePassScreen(
-                modifier = modifier,
                 onBackClick = {
                     navController.popBackStack()
                 },

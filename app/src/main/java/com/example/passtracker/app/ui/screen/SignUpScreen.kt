@@ -58,7 +58,8 @@ fun SignUpScreen(
 
         is RegisterState.Loading -> LoadingComponent()
 
-        is RegisterState.Failure -> ErrorComponent(state.message) {
+        is RegisterState.Failure -> ErrorComponent("Неверные данные") {
+            viewModel.setInitialState()
         }
         is RegisterState.Success -> Unit
     }
@@ -155,7 +156,7 @@ fun SignUpScreenContent(
                 secondName = secondName,
                 firstName = firstName,
                 middleName = middleName,
-                group = group.toInt(),
+                group = group.toIntOrNull() ?: 0,
                 email = email,
                 password = password
             ))

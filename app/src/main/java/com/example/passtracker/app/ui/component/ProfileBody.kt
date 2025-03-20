@@ -31,9 +31,10 @@ fun ProfileBody(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .shadow(8.dp, RoundedCornerShape(12.dp))
-            .background(Color.White, RoundedCornerShape(12.dp))
-            .padding(16.dp),
+//            .shadow(8.dp, RoundedCornerShape(12.dp))
+//            .background(Color.White, RoundedCornerShape(12.dp))
+            .padding(horizontal =  16.dp)
+            .padding(bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         ProfileTextField(
@@ -49,7 +50,8 @@ fun ProfileBody(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 16.dp),
+                .padding(bottom = 16.dp)
+                .weight(1f),
             contentAlignment = Alignment.BottomCenter
         ) {
             if (editMode) {
@@ -58,7 +60,7 @@ fun ProfileBody(
                 Image(
                     painter = painterResource(R.drawable.tsu_icon),
                     contentDescription = null,
-                    modifier = Modifier.size(112.dp)
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }
